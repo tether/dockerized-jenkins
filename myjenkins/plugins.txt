@@ -1,3 +1,13 @@
+durable-task:1.4
 docker-plugin:0.8
 docker-build-step:1.22
-
+ansicolor:0.4.1
+build-monitor-plugin:1.5+build.117
+scm-api:0.2
+git:2.3.5
+git-client:1.16.1
+github:1.11.2
+github-api:1.66
+github-oauth:0.20
+credentials:1.22
+token-macro:1.10
