@@ -11,3 +11,5 @@ build:
 
 start:
 	./start.sh
+
+.PHONY: install cleanup build start
