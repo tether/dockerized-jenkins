@@ -11,3 +11,4 @@ github-api:1.66
 github-oauth:0.20
 credentials:1.22
 token-macro:1.10
+scm-sync-configuration:0.0.8
