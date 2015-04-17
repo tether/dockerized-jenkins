@@ -1,3 +1,6 @@
+install:
+	./install.sh
+
 cleanup:
 	set -x
 	docker rm -v $$(docker ps -q -a --no-trunc) || exit 0
@@ -6,8 +9,7 @@ cleanup:
 build:
 	./build.sh
 
-install:
-	./install.sh
-
 start:
 	./start.sh
+
+.PHONY: install cleanup build start
