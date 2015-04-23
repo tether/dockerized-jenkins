@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -eu
+
+usage () { printf "\nUsage:\n\t $0 <image_name> <command>\n\n"; }
+[[ "$#" == 2 ]] || (usage; exit 1)
+
+IMAGE=$1
+COMMAND=$2
+
+WORKSPACE=/opt/workspace
+docker build -t $IMAGE .
+docker run --rm -v "$(pwd)":${WORKSPACE} -w ${WORKSPACE} ${IMAGE} ${COMMAND}

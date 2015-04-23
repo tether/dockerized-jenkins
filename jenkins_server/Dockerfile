@@ -5,6 +5,7 @@ USER root
 RUN apt-get install wget
 RUN wget -qO- https://get.docker.com/ | sh
 
+ADD run.on.docker /usr/local/bin/run.on.docker
 
 USER jenkins
 
