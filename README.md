@@ -3,8 +3,8 @@
 2. `./install.sh`
 
 # Run
-To persist your jenkins changes make sure you have a persistent volume linked on `/var/jenkins_home`
-`make start`
+1. To persist your jenkins changes make sure you have a persistent volume linked on `/var/jenkins_home`
+2. `make start`
 
 # Development
 1. `docker stop jenkins-server-container`
