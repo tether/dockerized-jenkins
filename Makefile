@@ -2,9 +2,8 @@ install:
 	./install.sh
 
 cleanup:
-	set -x
-	docker rm -v $$(docker ps -q -a --no-trunc) || exit 0
-	docker rmi $$(docker images --no-trunc | grep none | awk '{print $$3 }') || exit 0
+	docker rm -v $$(docker ps -a -q | grep -v $$(docker ps -q | xargs | sed 's/ /\\\|/')) 2>/dev/null
+	docker rmi $$(docker images --no-trunc | grep none | awk '{print $$3 }') 2>/dev/null
 
 build:
 	./build.sh
