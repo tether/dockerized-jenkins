@@ -10,6 +10,5 @@ github-oauth:0.20
 credentials:1.22
 token-macro:1.10
 scm-sync-configuration:0.0.8
-google-login:1.1
 greenballs:1.14
 delivery-pipeline-plugin:0.8.11
