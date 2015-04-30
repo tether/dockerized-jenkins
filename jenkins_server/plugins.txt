@@ -15,3 +15,4 @@ delivery-pipeline-plugin:0.8.11
 jquery:1.11.2-0
 parameterized-trigger:2.26
 gravatar:2.1
+build-timeout:1.14.1
