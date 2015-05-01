@@ -24,3 +24,17 @@ mapdb-api:1.0.1.0
 ssh-credentials:1.6.1
 credentials:1.10
 scm-api:0.2
+
+xcode-plugin:1.4.8
+
+slack:1.7
+
+heroku-jenkins-plugin:0.7.1-BETA
+
+ghprb:1.19
+ssh-agent:1.6
+build-flow-plugin:0.17
+credentials:1.16.1
+ssh-credentials:1.7.1
+
+copyartifact:1.35
