@@ -1,4 +1,5 @@
-FROM jenkins:1.596.2  # https://github.com/cloudbees/jenkins-ci.org-docker/blob/master/Dockerfile
+FROM jenkins:1.596.2
+# https://github.com/cloudbees/jenkins-ci.org-docker/blob/master/Dockerfile
 
 USER root
 
