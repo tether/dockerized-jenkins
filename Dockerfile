@@ -2,10 +2,8 @@ FROM jenkins:1.596.2
 
 USER root
 
-RUN apt-get install wget
-RUN wget -qO- https://get.docker.com/ | sh
-
-ADD run.on.docker /usr/local/bin/run.on.docker
+ADD . /usr/local/bin
+RUN /usr/local/bin/install_docker.sh
 
 USER jenkins
 
