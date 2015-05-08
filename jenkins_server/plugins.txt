@@ -38,3 +38,5 @@ credentials:1.16.1
 ssh-credentials:1.7.1
 
 copyartifact:1.35
+
+simple-theme-plugin:0.3
