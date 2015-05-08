@@ -2,6 +2,8 @@ FROM jenkins:1.596.2
 
 USER root
 
+ADD bin /usr/local/bin
+
 ADD . /usr/local/bin
 RUN /usr/local/bin/install_docker.sh
 
