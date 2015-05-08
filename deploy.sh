@@ -3,6 +3,7 @@ set -e
 
 usage(){
   echo "${BASH_SOURCE[0]} <ssh-connection-string>"
+  echo "Example: ${BASH_SOURCE[0]} -i ~/certificate.pem user@host"
   exit 1
 }
 
