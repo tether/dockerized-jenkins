@@ -1,14 +1,23 @@
+CONTAINER_NAME := jenkins-server-container
+
 install:
 	./install.sh
 
-cleanup:
-	docker rm -v $$(docker ps -a -q | grep -v $$(docker ps -q | xargs | sed 's/ /\\\|/g')) 2>/dev/null || echo Nothing to do
+clean:
+	docker rm -v $$(docker ps -a -q | grep -v "$$(docker ps -q | xargs | sed 's/ /\\\|/g') ") 2>/dev/null || echo Nothing to do
 	docker rmi $$(docker images --no-trunc | grep none | awk '{print $$3 }') 2>/dev/null || echo Nothing to do
 
 build:
 	./build.sh
 
 start:
-	./start.sh
+	docker run --name $(CONTAINER_NAME) -p 8080:8080 -v /var/jenkins_home:/var/jenkins_home --restart always -d jenkins_server
 
-.PHONY: install cleanup build start
+stop:
+	echo $(CONTAINER_NAME)
+	docker stop $(CONTAINER_NAME)
+
+rebuild: build stop clean start
+
+
+.PHONY: install clean build start stop rebuild

@@ -7,8 +7,5 @@
 2. `make start`
 
 # Development
-1. `docker stop jenkins-server-container`
-2. Make changes to the files
-3. `make cleanup`
-4. `make build`
-5. `make start`
+1. Make changes or pull them from the repository
+2. `make rebuild` -> it will stop running container, rebuild the image, clean docker garbage and start jenkins again
