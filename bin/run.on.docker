@@ -9,4 +9,4 @@ COMMAND=$2
 
 WORKSPACE=/opt/workspace
 docker build -t $IMAGE .
-docker run --rm -v "$(pwd)":${WORKSPACE} -w ${WORKSPACE} ${IMAGE} ${COMMAND}
+docker run --rm -v "$(pwd)":${WORKSPACE} -w ${WORKSPACE} ${IMAGE} bash -c "${COMMAND}"
