@@ -1,13 +1,30 @@
 #!/usr/bin/env bash
-set -ex
+set -eu
 
-sum_all() {
+usage () { 
+  printf "\nUsage:\t $0 [--help] [docker-compose-file]"
+  printf "\n\t\tdocker-compose-file     .yml file to use with docker-compose command. Default: docker-compose.yml"
+  printf "\n\n"
+}
+[[ "${1:-}" == "--help" ]] && (usage; exit 1)
+
+running_dir=$(dirname ${BASH_SOURCE[0]})
+source "${running_dir}/common"
+printscript ${BASH_SOURCE[0]}
+
+COMPOSE_YML=${1:-'docker-compose.yml'}
+
+sum_all () {
   awk '{s+=$1} END {print s}'
 }
 
-compose_exit_code() {
-  docker-compose ps -q | xargs docker inspect -f '{{ .State.ExitCode }}' | sum_all
+compose_exit_code () {
+  compose ps -q | xargs docker inspect -f '{{ .State.ExitCode }}' | sum_all
 }
 
-docker-compose stop && docker-compose build && docker-compose up
+compose () {
+  docker-compose -f ${COMPOSE_YML} ${@}
+}
+
+compose stop && compose build && compose up
 exit $(compose_exit_code)
