@@ -14,17 +14,9 @@ printscript ${BASH_SOURCE[0]}
 
 COMPOSE_YML=${1:-'docker-compose.yml'}
 
-sum_all () {
-  awk '{s+=$1} END {print s}'
-}
-
-compose_exit_code () {
-  compose ps -q | xargs docker inspect -f '{{ .State.ExitCode }}' | sum_all
-}
-
 compose () {
   docker-compose -f ${COMPOSE_YML} ${@}
 }
 
 compose stop && compose build && compose up
-exit $(compose_exit_code)
+compose ps | grep mainrunner | grep 'Exit 0'
