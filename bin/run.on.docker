@@ -4,10 +4,15 @@ set -eu
 usage () { printf "\nUsage:\n\t $0 <image_name> <command>\n\n"; }
 [[ "$#" -gt 1 ]] || (usage; exit 1)
 
+running_dir=$(dirname ${BASH_SOURCE[0]})
+source "${running_dir}/common"
+printscript ${BASH_SOURCE[0]}
+
 IMAGE=$1
 shift
 COMMAND=$@
 
 WORKSPACE=/opt/workspace
+
 docker build -t $IMAGE .
 docker run --rm -v "$(pwd)":${WORKSPACE} -w ${WORKSPACE} ${IMAGE} bash -c "${COMMAND}"
