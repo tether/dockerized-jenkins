@@ -12,6 +12,7 @@ token-macro:1.10
 greenballs:1.14
 
 delivery-pipeline-plugin:0.8.11
+build-pipeline-plugin:1.4.7
 jquery:1.11.2-0
 parameterized-trigger:2.26
 gravatar:2.1
