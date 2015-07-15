@@ -1,5 +1,4 @@
 .git/
-scripts/
 Makefile
 Dockerfile
 README.md
