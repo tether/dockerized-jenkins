@@ -7,7 +7,7 @@ install_dependencies() {
 
 install_docker() {
   wget -qO- https://get.docker.com/ | sh
-  usermod -aG docker `whoami`
+  usermod -aG docker $DOCKER_USER
 }
 
 install_docker_compose() {
