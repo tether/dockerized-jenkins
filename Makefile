@@ -11,10 +11,15 @@ build:
 	./build.sh
 
 start:
-	docker run --name $(CONTAINER_NAME) -p 8080:8080 -v /var/jenkins_home:/var/jenkins_home --restart always -d jenkins_server
+	docker run -d \
+		--name $(CONTAINER_NAME) \
+		-p 8080:8080 \
+		-v /var/jenkins_home:/var/jenkins_home \
+		--restart always \
+		jenkins_server
 
 stop:
-	echo $(CONTAINER_NAME)
+	@echo 'Stopping $(CONTAINER_NAME)'
 	docker stop $(CONTAINER_NAME)
 
 rebuild: build stop clean start
