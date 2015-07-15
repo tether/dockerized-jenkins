@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eu
 
-usage () { 
+usage () {
   printf "\nUsage:\t $0 [--help] [docker-compose-file]"
   printf "\n\t\tdocker-compose-file     .yml file to use with docker-compose command. Default: docker-compose.yml"
   printf "\n\n"
@@ -18,5 +18,21 @@ compose () {
   docker-compose -f ${COMPOSE_YML} ${@}
 }
 
-compose stop && compose build && compose up
-compose ps | grep mainrunner | grep 'Exit 0'
+# Clean up before start
+compose stop && compose rm -fv
+
+# Build environment images
+compose build
+
+# Allow errors to happen during a build
+set +e
+compose run --rm mainrunner
+exitcode="$?"
+# Get ready to return the appropriate exit code
+set -e
+
+# Clean up after ourselves
+compose stop && compose rm -fv
+
+# Did it break?
+exit $exitcode
