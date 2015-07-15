@@ -18,6 +18,14 @@ start:
 		--restart always \
 		jenkins_server
 
+dev: build
+	@mkdir -p jenkins_home && sudo chown 1000:1000 jenkins_home
+	docker run -ti --rm \
+		--name jenkins-server-dev \
+		-p 8080:8080 \
+		-v `pwd`/jenkins_home:/var/jenkins_home \
+		jenkins_server
+
 stop:
 	@echo 'Stopping $(CONTAINER_NAME)'
 	docker stop $(CONTAINER_NAME)
@@ -25,4 +33,4 @@ stop:
 rebuild: build stop clean start
 
 
-.PHONY: install clean build start stop rebuild
+.PHONY: install clean build start stop rebuild dev
