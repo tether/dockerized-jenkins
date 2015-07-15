@@ -16,13 +16,12 @@ build_jenkins() {
 }
 
 message() {
-  set +x
   echo "################################################################################"
   echo "#                                                                              #"
   echo "#   Please run: $ source ~/.bashrc                                             #"
   echo "#   Add your jenkins data to /var/jenkins_home                                 #"
   echo "#   Start jenkins: $ make start                                                #"
-  echo "#   Show jenkins image: $ docker images | grep jenkins_server                  #"
+  echo "#   Show jenkins image: $ docker images jenkins_server*                        #"
   echo "#                                                                              #"
   echo "################################################################################"
 }
