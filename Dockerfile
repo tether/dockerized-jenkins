@@ -3,7 +3,9 @@ FROM jenkins:1.596.2
 
 ADD ./scripts/install_docker.sh /tmp/install_docker.sh
 USER root
-RUN DOCKER_USER=jenkins /tmp/install_docker.sh
+RUN DOCKER_USER=jenkins /tmp/install_docker.sh \
+    && apt-get clean \
+    && rm -fr /var/lib/apt/lists/*
 USER jenkins
 
 ADD ./jenkins/bin /usr/local/bin
