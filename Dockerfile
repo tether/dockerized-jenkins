@@ -12,5 +12,4 @@ ADD ./jenkins/bin /usr/local/bin
 ADD ./jenkins/plugins.txt /usr/share/jenkins/plugins.txt
 RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
 
-ENV DOCKER_HOST=/tmp/docker.sock
 ENV JAVA_OPTS "${JAVA_OPTS} -Dfile.encoding=UTF-8"

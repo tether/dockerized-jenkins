@@ -15,6 +15,7 @@ start:
 		--name $(CONTAINER_NAME) \
 		-p 8080:8080 \
 		-v /var/jenkins_home:/var/jenkins_home \
+		-v /var/run/docker.sock:/var/run/docker.sock \
 		--restart always \
 		jenkins_server
 
@@ -24,6 +25,7 @@ dev: build
 		--name jenkins-server-dev \
 		-p 8080:8080 \
 		-v `pwd`/jenkins_home:/var/jenkins_home \
+		-v /var/run/docker.sock:/var/run/docker.sock \
 		jenkins_server
 
 stop:
