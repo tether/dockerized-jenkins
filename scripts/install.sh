@@ -12,7 +12,7 @@ final_setup() {
 }
 
 build_jenkins() {
-  ./build.sh
+  ./scripts/build.sh
 }
 
 message() {
@@ -26,7 +26,7 @@ message() {
   echo "################################################################################"
 }
 
-sudo ./install_docker.sh
+sudo ./scripts/install_docker.sh
 
 final_setup
 build_jenkins

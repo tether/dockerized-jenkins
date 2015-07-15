@@ -1,6 +1,6 @@
 # Install
 1. Clone this repo
-2. `./install.sh`
+2. `./scripts/install.sh`
 
 # Run
 1. To persist your jenkins changes make sure you have a persistent volume linked on `/var/jenkins_home`

@@ -1,14 +1,14 @@
 CONTAINER_NAME := jenkins-server-container
 
 install:
-	./install.sh
+	./scripts/install.sh
 
 clean:
 	docker rm -v $$(docker ps -a -q | grep -v "$$(docker ps -q | xargs | sed 's/ /\\\|/g') ") 2>/dev/null || echo Nothing to do
 	docker rmi $$(docker images --no-trunc | grep none | awk '{print $$3 }') 2>/dev/null || echo Nothing to do
 
 build:
-	./build.sh
+	./scripts/build.sh
 
 start:
 	docker run -d \

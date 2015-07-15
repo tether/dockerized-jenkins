@@ -3,16 +3,16 @@ FROM jenkins:1.596.2
 
 USER root
 
-COPY bin /usr/local/bin
+COPY jenkins/bin /usr/local/bin
 
-COPY . /usr/local/bin
-RUN /usr/local/bin/install_docker.sh
+COPY scripts/install_docker.sh /tmp/install_docker.sh
+RUN /tmp/install_docker.sh
 
 USER jenkins
 
 ENV DOCKER_HOST=tcp://172.17.42.1:2375
 
-COPY plugins.txt /usr/share/jenkins/plugins.txt
+COPY jenkins/plugins.txt /usr/share/jenkins/plugins.txt
 RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
 
 ENV JAVA_OPTS "${JAVA_OPTS} -Dfile.encoding=UTF-8"
