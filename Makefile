@@ -34,13 +34,12 @@ dev: build
 		jenkins_server
 
 dev.dind:
-	docker build -t jenkins-dind-dev -f Dockerfile.dind .
 	docker run -d -t \
 		--privileged \
 		--name jenkins-server-dind \
 		-v `pwd`/.docker-dev/jenkins_home:/var/jenkins_home \
 		-v `pwd`/.docker-dev/run:/var/run \
-		jenkins-dind-dev
+		fgrehm/alpine-dind
 	@sleep 4
 	sudo chown 0:999 .docker-dev/run/docker.sock
 	sudo chmod +g .docker-dev/run/docker.sock
