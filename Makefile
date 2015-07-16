@@ -39,10 +39,10 @@ dev.dind:
 		--privileged \
 		--name jenkins-server-dind \
 		-v `pwd`/.docker-dev/jenkins_home:/var/jenkins_home \
-		-v `pwd`/.docker-dev/var-run:/var/run \
+		-v `pwd`/.docker-dev/run:/var/run \
 		jenkins-dind-dev
 	@sleep 4
-	sudo chown 0:999 .docker-dev/var-run/docker.sock
-	sudo chmod +g .docker-dev/var-run/docker.sock
+	sudo chown 0:999 .docker-dev/run/docker.sock
+	sudo chmod +g .docker-dev/run/docker.sock
 
 .PHONY: install clean build start stop rebuild dev dev.dind
