@@ -1,5 +1,5 @@
 .git/
-jenkins_home/
+.docker-dev/
 Makefile
 Dockerfile
 README.md
