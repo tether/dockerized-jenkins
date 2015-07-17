@@ -25,10 +25,10 @@ stop:
 
 rebuild: build stop clean start
 
-dev: build
-	@mkdir -p .docker-dev/backup
-	@mkdir -p .docker-dev/jenkins_home
-	@sudo chown 1000:1000 .docker-dev/jenkins_home .docker-dev/backup
+dev:
+	mkdir -p .docker-dev/backup
+	mkdir -p .docker-dev/jenkins_home
+	sudo chown 1000:1000 .docker-dev/jenkins_home .docker-dev/backup
 	docker run -ti --rm \
 		--name jenkins-server-dev \
 		-p 8080:8080 \
@@ -46,5 +46,8 @@ dev.dind:
 	@sleep 4
 	sudo chown 0:999 .docker-dev/run/docker.sock
 	sudo chmod +g .docker-dev/run/docker.sock
+
+dev.clean:
+	sudo rm -rf .docker-dev/jenkins_home/*
 
 .PHONY: install clean build start stop rebuild dev dev.dind
