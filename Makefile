@@ -26,10 +26,11 @@ stop:
 rebuild: build stop clean start
 
 dev: build
-	@mkdir -p .docker-dev/jenkins_home && sudo chown 1000:1000 .docker-dev/jenkins_home
+	@mkdir -p .docker-dev/{backup,jenkins_home} && sudo chown 1000:1000 .docker-dev/jenkins_home .docker-dev/backup
 	docker run -ti --rm \
 		--name jenkins-server-dev \
 		-p 8080:8080 \
+		-v `pwd`/.docker-dev/backup:/mnt/backup \
 		--volumes-from jenkins-server-dind \
 		jenkins_server
 
