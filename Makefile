@@ -30,11 +30,11 @@ dev: build
 	docker run -ti --rm \
 		--name jenkins-server-dev \
 		-p 8080:8080 \
-		--volumes-from jenkins-dind-dev \
+		--volumes-from jenkins-server-dind \
 		jenkins_server
 
 dev.dind:
-	docker run -d -t \
+	docker run -d -ti \
 		--privileged \
 		--name jenkins-server-dind \
 		-v `pwd`/.docker-dev/jenkins_home:/var/jenkins_home \
