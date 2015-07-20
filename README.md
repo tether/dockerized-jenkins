@@ -14,4 +14,5 @@
 1. `mkdir -p .docker-dev/backup`
 2. `scp -r -i <YOUR_KEY> USER@HOST:/mnt/backup .docker-dev`
 3. Go to http://localhost:8080/thinBackup/backupsettings and ensure the backup dir is set to `/mnt/backup`
-3. Go to http://localhost:8080/thinBackup/restoreOptions and restore the backup you just downloaded
+4. Go to http://localhost:8080/thinBackup/restoreOptions and restore the backup you just downloaded
+5. Go to http://localhost:8080/manage and `Reload Configuration from Disk`
