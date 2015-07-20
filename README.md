@@ -15,4 +15,6 @@
 2. `scp -r -i <YOUR_KEY> USER@HOST:/mnt/backup .docker-dev`
 3. Go to http://localhost:8080/thinBackup/backupsettings and ensure the backup dir is set to `/mnt/backup`
 4. Go to http://localhost:8080/thinBackup/restoreOptions and restore the backup you just downloaded
-5. Go to http://localhost:8080/manage and `Reload Configuration from Disk`
+5. `sed -i 's|jenkins\.example\.com|localhost|g' .docker-dev/jenkins_home/jenkins.model.JenkinsLocationConfiguration.xml`
+6. `sed -i 's|<useSecurity>true</useSecurity>|<useSecurity>false</useSecurity>|g' .docker-dev/jenkins_home/config.xml`
+7. Go to http://localhost:8080/manage and `Reload Configuration from Disk`
