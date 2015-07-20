@@ -48,6 +48,10 @@ dev.dind:
 	sudo chmod +g .docker-dev/run/docker.sock
 
 dev.clean:
-	sudo rm -rf .docker-dev/jenkins_home/*
+	docker stop jenkins-server-dind || true
+	docker rm -fv jenkins-server-dind || true
+	docker stop jenkins-server-dev || true
+	docker rm -fv jenkins-server-dev || true
+	sudo rm -rf .docker-dev/*
 
-.PHONY: install clean build start stop rebuild dev dev.dind
+.PHONY: install clean build start stop rebuild dev dev.dind dev.clean
