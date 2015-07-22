@@ -1,5 +1,6 @@
 .git/
 .docker-dev/
+tests/
 Makefile
 Dockerfile
 README.md
