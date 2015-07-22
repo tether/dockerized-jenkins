@@ -7,11 +7,11 @@ install_dependencies() {
 
 install_docker() {
   wget -qO- https://get.docker.com/ | sh
-  usermod -aG docker `whoami`
+  usermod -aG docker $DOCKER_USER
 }
 
 install_docker_compose() {
-  curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+  curl -L https://github.com/docker/compose/releases/download/1.3.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
   chmod +x /usr/local/bin/docker-compose
 }
 

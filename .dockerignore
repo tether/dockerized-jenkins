@@ -1,0 +1,5 @@
+.git/
+.docker-dev/
+Makefile
+Dockerfile
+README.md

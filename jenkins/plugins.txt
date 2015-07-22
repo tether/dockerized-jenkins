@@ -1,3 +1,5 @@
+thinBackup:1.7.4
+
 durable-task:1.4
 ansicolor:0.4.1
 build-monitor-plugin:1.5+build.117
@@ -19,7 +21,6 @@ gravatar:2.1
 build-timeout:1.14.1
 clone-workspace-scm:0.6
 
-scm-sync-configuration:0.0.8
 subversion:2.5
 mapdb-api:1.0.1.0
 ssh-credentials:1.6.1
