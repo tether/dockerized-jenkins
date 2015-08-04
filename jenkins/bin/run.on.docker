@@ -4,7 +4,9 @@ set -eu
 usage () {
   printf "\nUsage: $0 [--help] [image-name] [docker-run-opts] -- [command]\n"
   printf "\n  image-name\t\tname for the docker image that will be built"
-  printf "\n  docker-run-opts\toptional 'docker run' options (currently supports '-e' only)"
+  printf "\n  docker-run-opts\toptional 'docker run' options"
+  printf "\n\t\t\t(supported flags: '-e', '--env', '--env-file')"
+  printf "\n  command\t\tcommand to run inside the docker environment"
   printf "\n\n"
 }
 
