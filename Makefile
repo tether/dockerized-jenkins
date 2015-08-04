@@ -60,6 +60,7 @@ test:
 	@docker history jenkins-server-tests 1>/dev/null
 	docker run -ti --rm \
 		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v /tmp:/tmp \
 		-v `pwd`:/workspace \
 		jenkins-server-tests \
 		basht /workspace/tests/*.bash
@@ -68,4 +69,4 @@ test:
 test.build:
 	docker build -t jenkins-server-tests -f Dockerfile.test .
 
-.PHONY: install clean build start stop rebuild dev dev.dind dev.clean
+.PHONY: install clean build start stop rebuild dev dev.dind dev.clean test test.build
