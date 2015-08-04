@@ -2,6 +2,7 @@ export TEST_IMAGE='jenkins-server-test-run-on-docker'
 export WORKSPACE='/tmp/test-workspace'
 
 prepare.environment() {
+  rm -rf $WORKSPACE
   mkdir -p $WORKSPACE
   cat > $WORKSPACE/Dockerfile
 }
@@ -63,8 +64,33 @@ DOCKERFILE
   fi
 }
 
-T_allowsDockerRunArgsToBeProvided() {
-  $T_fail "TODO"
+T_allowsEnvVarsToBeProvidedToTheUnderlyingDockerRunCommand() {
+  prepare.environment <<-DOCKERFILE
+FROM gliderlabs/alpine:3.2
+RUN apk-install bash
+DOCKERFILE
+
+  set -e
+  output=$(run.on.docker $TEST_IMAGE --env OTHER_VAR="foo" -e A_VAR="env-var" -- 'echo Vars: $A_VAR $OTHER_VAR')
+  set +e
+
+  if ! [[ "$output" =~ 'Vars: env-var foo' ]]; then
+    $T_fail "Env var not passed on to docker run"
+  fi
+}
+
+T_allowsEnvVarsFileToBeProvidedToTheUnderlyingDockerRunCommand() {
+  prepare.environment <<-DOCKERFILE
+FROM gliderlabs/alpine:3.2
+RUN apk-install bash
+DOCKERFILE
+  echo 'FROM_FILE=value' > $WORKSPACE/envfile
+
+  output=$(run.on.docker $TEST_IMAGE --env-file $WORKSPACE/envfile -- 'echo From file: $FROM_FILE')
+
+  if ! [[ "$output" =~ 'From file: value' ]]; then
+    $T_fail "Env var file not passed on to docker run"
+  fi
 }
 
 T_returnsWithSameExitCodeAsTheCommandRan() {
@@ -100,7 +126,7 @@ DOCKERFILE
 T_failsIfImageCantBeBuilt() {
   prepare.environment <<-DOCKERFILE
 FROM gliderlabs/alpine:3.2
-RUN apk-install non-exist
+RUN exit 1
 DOCKERFILE
 
   output=$(run.on.docker $TEST_IMAGE 'echo Hello world' 2>&1)
@@ -112,5 +138,46 @@ DOCKERFILE
 
   if [[ "$output" =~ 'Hello world' ]]; then
     $T_fail "Command was executed even though the image build failed o_O"
+  fi
+}
+
+T_failsIfNoImageNameGetsProvided() {
+  prepare.environment <<-DOCKERFILE
+FROM gliderlabs/alpine:3.2
+RUN apk-install bash
+DOCKERFILE
+
+  output=$(run.on.docker -e foo=bar -- echo Hello world 2>&1)
+  exitcode=$?
+
+  if [[ "$exitcode" = '0' ]]; then
+    $T_fail "Build did not fail"
+  fi
+}
+
+T_failsIfNoCommandGetsProvided() {
+  prepare.environment <<-DOCKERFILE
+FROM gliderlabs/alpine:3.2
+RUN apk-install bash
+DOCKERFILE
+
+  output=$(run.on.docker $TEST_IMAGE 2>&1)
+  exitcode=$?
+  if [[ "$exitcode" = '0' ]]; then
+    $T_fail "Build did not fail"
+  fi
+
+  output=$(run.on.docker $TEST_IMAGE -e foo=bar 2>&1)
+  exitcode=$?
+
+  if [[ "$exitcode" = '0' ]]; then
+    $T_fail "Build did not fail"
+  fi
+
+  output=$(run.on.docker $TEST_IMAGE -e foo=bar -- 2>&1)
+  exitcode=$?
+
+  if [[ "$exitcode" = '0' ]]; then
+    $T_fail "Build did not fail"
   fi
 }

@@ -1,18 +1,50 @@
 #!/usr/bin/env bash
 set -eu
 
-usage () { printf "\nUsage:\n\t $0 <image_name> <command>\n\n"; }
+usage () {
+  printf "\nUsage: $0 [--help] [image-name] [docker-run-opts] -- [command]\n"
+  printf "\n  image-name\t\tname for the docker image that will be built"
+  printf "\n  docker-run-opts\toptional 'docker run' options (currently supports '-e' only)"
+  printf "\n\n"
+}
+
+# We need at least 2 arguments for the script to work
 [[ "$#" -gt 1 ]] || (usage; exit 1)
 
 running_dir=$(dirname ${BASH_SOURCE[0]})
 source "${running_dir}/common"
 printscript ${BASH_SOURCE[0]}
 
-IMAGE=$1
-shift
+IMAGE=
+DOCKER_RUN_ARGS=
+
+# This is here for backwards compatibility only, should be dropped
+# in favor of explicitly passing in `-t` when we have a chance
+if ! [[ "${1}" =~ ^- ]]; then
+  IMAGE="$1"
+  shift 1
+fi
+
+while true; do
+  case "$1" in
+    --help)              (usage; exit 1);;
+    -e|--env|--env-file) DOCKER_RUN_ARGS="$DOCKER_RUN_ARGS $1 $2"; shift 2;;
+    --)                  shift 1; break;;
+    -*)                  (echo "Can't handle '$1' argument"; exit 1);;
+    # This is here for backwards compatibility only, should be dropped
+    # in favor of explicitly passing in `--`s once we have a chance
+    *)                   break;;
+  esac
+done
+
+# Did an image get set?
+[[ -n "$IMAGE" ]] || (usage; exit 1)
+# Do we have a command to run?
+[[ "$#" -gt 0 ]] || (usage; exit 1)
+
 COMMAND=$@
 
 WORKSPACE=/opt/workspace
 
 docker build -t $IMAGE .
-docker run --rm -v "$(pwd)":${WORKSPACE} -w ${WORKSPACE} ${IMAGE} bash -c "${COMMAND}"
+docker run --rm -v "$(pwd)":${WORKSPACE} -w ${WORKSPACE} ${DOCKER_RUN_ARGS} ${IMAGE} bash -c "${COMMAND}"
