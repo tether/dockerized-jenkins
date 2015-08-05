@@ -55,4 +55,18 @@ dev.clean:
 	docker rm -fv jenkins-server-dev || true
 	sudo rm -rf .docker-dev/*
 
-.PHONY: install clean build start stop rebuild dev dev.dind dev.clean
+# TODO: Get this to run inside the DinD instance we have around
+test:
+	@docker history jenkins-server-tests 1>/dev/null
+	docker run -ti --rm \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v /tmp:/tmp \
+		-v `pwd`:/workspace \
+		jenkins-server-tests \
+		basht /workspace/tests/*.bash
+
+# TODO: Get this to build inside the DinD instance we have around
+test.build:
+	docker build -t jenkins-server-tests -f Dockerfile.test .
+
+.PHONY: install clean build start stop rebuild dev dev.dind dev.clean test test.build

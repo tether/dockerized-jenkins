@@ -2,8 +2,9 @@
 set -eu
 
 usage () {
-  printf "\nUsage:\t $0 [--help] [docker-compose-file]"
-  printf "\n\t\tdocker-compose-file     .yml file to use with docker-compose command. Default: docker-compose.yml"
+  printf "\nUsage:\t $0 [--help] [docker-compose-opts]\n"
+  printf "\n  docker-compose-opts\toptional 'docker-compose' options"
+  printf "\n\t\t\t(supported flags: '-p', '--project-name', '-e')"
   printf "\n\n"
 }
 [[ "${1:-}" == "--help" ]] && (usage; exit 1)
@@ -12,10 +13,28 @@ running_dir=$(dirname ${BASH_SOURCE[0]})
 source "${running_dir}/common"
 printscript ${BASH_SOURCE[0]}
 
-COMPOSE_YML=${1:-'docker-compose.yml'}
+DOCKER_COMPOSE_ARGS=
+DOCKER_COMPOSE_RUN_ARGS=
+
+# This is here for backwards compatibility only, should be dropped
+# in favor of explicitly passing in `-f` when we have a chance
+if ! [[ "${1:-}" =~ ^- ]]; then
+  DOCKER_COMPOSE_ARGS="-f ${1:-docker-compose.yml}"
+  shift 1 || true
+fi
+
+while true; do
+  [[ "$#" -gt 0 ]] || break
+  case "$1" in
+    -e)                DOCKER_COMPOSE_RUN_ARGS="$DOCKER_COMPOSE_RUN_ARGS $1 $2"; shift 2;;
+    -p|--project-name) DOCKER_COMPOSE_ARGS="$DOCKER_COMPOSE_ARGS $1 $2"; shift 2;;
+    -*)                (echo "Can't handle '$1' argument"; exit 1);;
+    *)                 (usage; exit 1);;
+  esac
+done
 
 compose () {
-  docker-compose -f ${COMPOSE_YML} ${@}
+  docker-compose ${DOCKER_COMPOSE_ARGS} ${@}
 }
 
 # Clean up before start
@@ -26,7 +45,7 @@ compose build
 
 # Allow errors to happen during a build
 set +e
-compose run --rm mainrunner
+compose run --rm $DOCKER_COMPOSE_RUN_ARGS mainrunner
 exitcode="$?"
 # Get ready to return the appropriate exit code
 set -e

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+# TODO: Change the test environment to be based on ubuntu / debian so we can
+#       write tests for it (this works fine on ubuntu but not on Alpine Linux)
+
+echo "$@" \
+  | tr '[:upper:]' '[:lower:]' \
+  | sed 's/\(\s\|(\)\+/-/g' \
+  | sed 's/--\+/-/g'
