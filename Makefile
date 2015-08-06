@@ -10,6 +10,9 @@ clean:
 build:
 	./scripts/build.sh
 
+tag:
+	docker tag jenkins_server:latest jenkins_server:$(shell date +%Y%m%d%H%M%S)
+
 start:
 	docker run -d \
 		--name $(CONTAINER_NAME) \
@@ -24,7 +27,7 @@ stop:
 	@echo 'Stopping $(CONTAINER_NAME)'
 	docker stop $(CONTAINER_NAME)
 
-rebuild: build stop clean start
+rebuild: build tag stop clean start
 
 dev:
 	mkdir -p .docker-dev/backup
