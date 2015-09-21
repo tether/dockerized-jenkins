@@ -59,7 +59,7 @@ dev.clean:
 	sudo rm -rf .docker-dev/*
 
 # TODO: Get this to run inside the DinD instance we have around
-test:
+test: test.build
 	@docker history jenkins-server-tests 1>/dev/null
 	docker run -ti --rm \
 		-v /var/run/docker.sock:/var/run/docker.sock \
