@@ -1,4 +1,4 @@
-CONTAINER_NAME := jenkins-server-container
+CONTAINER_NAME ?= jenkins-server-container
 
 install:
 	./scripts/install.sh
