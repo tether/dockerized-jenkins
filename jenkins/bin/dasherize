@@ -7,5 +7,6 @@ set -eu -o pipefail
 
 echo "$@" \
   | tr '[:upper:]' '[:lower:]' \
-  | sed 's/\(\s\|(\)\+/-/g' \
-  | sed 's/--\+/-/g'
+  | awk '{gsub("^[^a-z0-9]|[^a-z0-9]$", ""); print}' \
+  | awk '{gsub("[^a-z0-9]", "-"); print}' \
+  | tr -s '-'
