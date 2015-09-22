@@ -1,4 +1,4 @@
-FROM jenkins:1.596.2
+FROM jenkins:1.609.3
 # https://github.com/cloudbees/jenkins-ci.org-docker/blob/master/Dockerfile
 
 ADD ./scripts/install_docker.sh /tmp/install_docker.sh
