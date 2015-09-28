@@ -2,7 +2,7 @@ thinBackup:1.7.4
 
 durable-task:1.4
 ansicolor:0.4.1
-build-monitor-plugin:1.5+build.117
+build-monitor-plugin:1.6+build.159
 scm-api:0.2
 git:2.3.5
 git-client:1.16.1
@@ -18,7 +18,7 @@ build-pipeline-plugin:1.4.8
 jquery:1.11.2-0
 parameterized-trigger:2.26
 gravatar:2.1
-build-timeout:1.14.1
+build-timeout:1.15
 clone-workspace-scm:0.6
 
 subversion:2.5
