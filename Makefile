@@ -18,7 +18,7 @@ start:
 		--name $(CONTAINER_NAME) \
 		-p 8080:8080 \
 		-v /var/jenkins_home:/var/jenkins_home \
-		-v /mnt/backup:/mnt/backup \
+		-v /var/jenkins_bkp:/var/jenkins_bkp \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		--restart always \
 		jenkins_server
@@ -36,7 +36,7 @@ dev:
 	docker run -ti --rm \
 		--name jenkins-server-dev \
 		-p 8080:8080 \
-		-v `pwd`/.docker-dev/backup:/mnt/backup \
+		-v `pwd`/.docker-dev/backup:/var/jenkins_bkp \
 		--volumes-from jenkins-server-dind \
 		jenkins_server
 
