@@ -29,7 +29,7 @@ scm-api:0.2
 
 xcode-plugin:1.4.8
 
-slack:1.7
+slack:1.8
 
 heroku-jenkins-plugin:0.7.1-BETA
 
